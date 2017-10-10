@@ -1,6 +1,6 @@
 import { Component, AfterContentInit } from '@angular/core';
 import { Scene, Grid, Engine } from 'hexenginets'
-
+import * as THREE from 'three'
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,8 +15,20 @@ export class AppComponent implements AfterContentInit {
   }
 
   ngAfterContentInit() {
-    var scene = new Scene({ title : 'scene01'});
-    this.engine.init({ containerId : 'container_id'});
-    this.engine.addScene('scence01',scene);
+    var scene = new Scene({ title: 'scene01' });
+    var geometry = new THREE.BoxGeometry(1, 1, 1);
+    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    var cube = new THREE.Mesh(geometry, material);
+
+    scene.scene.add(cube);
+
+
+    this.engine.init({
+      containerId: 'container_id',
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    this.engine.addScene('scence01', scene);
+    this.engine.resumeScene();
   }
 }
