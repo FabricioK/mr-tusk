@@ -1,5 +1,5 @@
 import { Component, AfterContentInit } from '@angular/core';
-import { Scene, Grid, Engine } from 'hexenginets'
+import { Engine,Scene,Grid } from 'hexenginets'
 import * as THREE from 'three'
 @Component({
   selector: 'app-root',
@@ -15,10 +15,13 @@ export class AppComponent implements AfterContentInit {
   }
 
   ngAfterContentInit() {
-    var scene = new Scene({ title: 'scene01' });
-    var geometry = new THREE.BoxGeometry(1, 1, 1);
-    var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    var cube = new THREE.Mesh(geometry, material);
+    var scene = new Scene({
+      title: 'scene01',
+      gridConfig: {
+        cellSize: 4
+      }
+    });
+
     var sceneSettings = {
       element: document.body,
       alpha: true,
@@ -32,22 +35,29 @@ export class AppComponent implements AfterContentInit {
       cameraPosition: null, // {x, y, z}
       orthoZoom: 4
     }
+
     if (!sceneSettings.lightPosition) {
       sceneSettings.light.position.set(-1, 1, -1).normalize();
     }
+
+    scene.camera.position.y = 50;
+    scene.camera.position.z = 200;
+
+    scene.container.add(sceneSettings.light);
+    scene.container.add(new THREE.AmbientLight(0xdddddd));
     
-    scene.scene.add(sceneSettings.light);
-    scene.scene.add(new THREE.AmbientLight(0xdddddd));;
-
-
     this.engine.init({
       containerId: 'container_id',
       width: window.innerWidth,
-      height: window.innerHeight
+      height: window.innerHeight,
+      renderSettings: {
+        alpha: sceneSettings.alpha,
+        antialias: sceneSettings.antialias
+      }
     });
-   
+
     this.engine.addScene('scence01', scene);
     this.engine.resumeScene();
-    scene.renderer.setClearColor('#fff',0);
+    scene.renderer.setClearColor('#fff', 0);
   }
 }
