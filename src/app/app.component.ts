@@ -1,5 +1,6 @@
 import { Component, AfterContentInit } from '@angular/core';
-import { Engine,Scene,Grid } from 'hexenginets'
+import { OrbitControls } from 'three-orbitcontrols-ts';
+import { Engine, Scene, Grid } from 'hexenginets'
 import * as THREE from 'three'
 @Component({
   selector: 'app-root',
@@ -43,9 +44,20 @@ export class AppComponent implements AfterContentInit {
     scene.camera.position.y = 50;
     scene.camera.position.z = 200;
 
+    const controls = new OrbitControls(scene.camera, scene.container.domElement);
+
     scene.container.add(sceneSettings.light);
     scene.container.add(new THREE.AmbientLight(0xdddddd));
-    
+    controls.enableZoom = true;
+    // How far you can orbit vertically, upper and lower limits.
+    controls.minPolarAngle = 0;
+    controls.maxPolarAngle = Math.PI;
+
+
+    // How far you can dolly in and out ( PerspectiveCamera only )
+    controls.minDistance = 0;
+    controls.maxDistance = Infinity;
+
     this.engine.init({
       containerId: 'container_id',
       width: window.innerWidth,
