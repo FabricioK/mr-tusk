@@ -18,6 +18,8 @@ export class AppComponent implements AfterContentInit {
   ngAfterContentInit() {
     var scene = new Scene({
       title: 'scene01',
+      innerHeight:window.innerHeight,
+      innerWidth:window.innerWidth,
       gridConfig: {
         cellSize: 4
       }
