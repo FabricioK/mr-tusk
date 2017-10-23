@@ -30,7 +30,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "core-js": "^2.4.1",
-    "hexenginets": "^3.5.16",
+    "hexenginets": "^3.5.29",
     "rxjs": "^5.4.1",
     "three-orbitcontrols-ts": "^0.1.2",
     "zone.js": "^0.8.14"
